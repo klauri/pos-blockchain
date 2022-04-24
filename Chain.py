@@ -1,4 +1,5 @@
 from time import time
+import datetime as d
 from Blocks import Block
 
 class Chain:
@@ -16,11 +17,14 @@ class Chain:
     def last_block(self):
         return self.chain[-1]
 
-    def new_block(self, block):
-        index = block.index + 1
+    def add_new_transaction(self, transaction):
+        self.unconfirmed_transactions.append(transaction)
+
+    def new_block(self):
+        index = self.last_block.index + 1
         timestamp = d.datetime.now()
-        hashblock = block.hash
-        data = ["Transaction " + str(index)]
-        block = Block(index, timestamp, data, hashblock) #return entire block
+        last_hash = self.last_block.hash
+        transactions = self.unconfirmed_transactions
+        block = Block(index, timestamp, transactions, last_hash) #return entire block
         self.chain.append(block)
         return True
