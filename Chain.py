@@ -6,11 +6,10 @@ class Chain:
     def __init__(self):
         self.unconfirmed_transactions = []
         self.chain = []
-        self.create_genesis_block()
+        #self.create_genesis_block()
     
     def create_genesis_block(self):
-        genesis_block = Block(0, time(), ["init_transaction"], 0)
-        genesis_block.hash = genesis_block.hash_block()
+        genesis_block = Block(0, time(), ["handshake_transaction"], "0", 0)
         self.chain.append(genesis_block)
     
     @property
@@ -25,6 +24,9 @@ class Chain:
         timestamp = d.datetime.now()
         last_hash = self.last_block.hash
         transactions = self.unconfirmed_transactions
-        block = Block(index, timestamp, transactions, last_hash) #return entire block
+        block = Block(index, timestamp, transactions, last_hash, 0) #return entire block
         self.chain.append(block)
         return True
+
+    def proof_of_work(self):
+        pass
