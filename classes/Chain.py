@@ -1,6 +1,6 @@
 from time import time
 import datetime as d
-from Blocks import Block
+from classes.Blocks import Block
 
 class Chain:
     def __init__(self):
