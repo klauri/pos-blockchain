@@ -10,16 +10,30 @@ line1 = LineItem(item1, 2)
 line2 = LineItem(item2, 2)
 line3 = LineItem(item3, 1)
 
-test_transaction = [
-        line1,
-        line2,
-        line3
-    ]
+test_transaction1 = [
+    line1,
+    line2,
+    line3
+]
+
+test_transaction2 = [
+    line1,
+    line3
+]
+
+test_transaction3 = [
+    line3
+]
 
 if __name__ == "__main__":
     chain = Chain()
-    transaction = Transaction(stream_id=1001, line_items=test_transaction)
-    chain.add_new_transaction(transaction)
-    chain.new_block()
+    transactions = [
+        Transaction(stream_id=1001, line_items=test_transaction1),
+        Transaction(stream_id=1001, line_items=test_transaction2),
+        Transaction(stream_id=1001, line_items=test_transaction3)
+    ]
+    for transaction in transactions:
+        chain.add_new_transaction(transaction)
+        chain.new_block()    
     for block in chain.chain:
-        print(block.transactions, block.hash, block.prevhash)
+        print(f"Hash: {block.hash} Previous hash: {block.prevhash}")
