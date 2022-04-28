@@ -1,19 +1,25 @@
 from time import time
 from classes.Chain import Chain
-from lib.transactions import generate_transaction, calculate_tax, calculate_total
+from classes.Transaction import Transaction, Item, LineItem
 
-test_transactions = [
-        ["burger", 2, 10.99],
-        ["fries", 2, 1.99],
-        ["hot dog", 1, 6.99]
+item1 = Item(0, "burger", 10.99)
+item2 = Item(1, "fries", 1.99)
+item3 = Item(2, "hot dog", 6.99)
+
+line1 = LineItem(item1, 2)
+line2 = LineItem(item2, 2)
+line3 = LineItem(item3, 1)
+
+test_transaction = [
+        line1,
+        line2,
+        line3
     ]
 
 if __name__ == "__main__":
     chain = Chain()
-    chain.create_genesis_block()
-    for transaction_data in test_transactions:
-        transaction = generate_transaction(1, time(), transaction_data)
-        chain.add_new_transaction(transaction)
-        chain.new_block()
+    transaction = Transaction(stream_id=1001, line_items=test_transaction)
+    chain.add_new_transaction(transaction)
+    chain.new_block()
     for block in chain.chain:
         print(block.transactions, block.hash, block.prevhash)
